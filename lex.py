@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import numpy
 
 def checkKeyword(words):
     keywords = ['include','void','int','float','struct','break','if','else','for','long','typedef','do','while','return','char','union','else','continue']
@@ -13,7 +14,7 @@ def checkKeyword(words):
     return counter,flag
 
 def checkSymbols(line):
-    symbols = [';',':','#','!','@','$','^','(',')','{','}']
+    symbols = [';',':','#','!','@','$','^','(',')','{','}',',']
     counter = 0
     flag = False
     for symbol in symbols:
@@ -40,8 +41,8 @@ for names in files:
         symbols = 0
         operators = 0
         countMain = 0
-        f = open(names,'r')
-        contents = f.read().splitlines()
+        with open(names,'r') as f:
+            contents = f.read().splitlines()
         print ("Code to be analyzed from "+names +" is ")
         for lines in contents:
             if lines[0:2] != '//' and lines[0:4] != 'prin' and lines[0:4] != 'scan':
